@@ -10,6 +10,7 @@ public class PlatformMovement : MonoBehaviour
     float timer = 0;
     bool corner = false;
     bool canRotate = true;
+    static public float rounded;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +20,7 @@ public class PlatformMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        rounded = Mathf.Round(transform.rotation.eulerAngles.z);
         if (joystick.Horizontal > .2)
         {
             if (transform.rotation.eulerAngles.z == 0)
@@ -70,11 +72,11 @@ public class PlatformMovement : MonoBehaviour
     {
         corner = true;
         timerGoing = true;
-        if (timer > .1f && corner && canRotate)
+        if (corner && canRotate)
         {
             if (collision.gameObject.name == "BottomRight")
             {
-                if (transform.rotation.eulerAngles.z == 0)
+                if (rounded == 0)
                 {
                     transform.position = new Vector3(6.3f, -3.03f, 0);
                     transform.Rotate(new Vector3(0, 0, 90));
@@ -91,34 +93,51 @@ public class PlatformMovement : MonoBehaviour
             }
             else if (collision.gameObject.name == "BottomLeft")
             {
-                if (transform.rotation.eulerAngles.z == 0)
+                if (rounded == 0)
                 {
-                    transform.Rotate(new Vector3(0, 0, -90));
-                    transform.position = new Vector3(-6.33f, -3.23f, 0);
-                    timer = 0;
-                    canRotate = false;
+                      transform.Rotate(new Vector3(0, 0, -90));
+                      transform.position = new Vector3(-6.33f, -3.23f, 0);
+                      timer = 0;
+                      canRotate = false; 
                 }
                 else
                 {
-                    transform.Rotate(new Vector3(0, 0, 90));
-                    transform.position = new Vector3(-4.91f, -4.7f, 0);
-                    timer = 0;
-                    canRotate = false;
+                      transform.Rotate(new Vector3(0, 0, 90));
+                      transform.position = new Vector3(-4.91f, -4.7f, 0);
+                      timer = 0;
+                      canRotate = false;
                 }
             }
             else if (collision.gameObject.name == "TopLeft")
             {
-                if (transform.rotation.eulerAngles.z == -90)
+                if (rounded == 270)
                 {
                     transform.Rotate(new Vector3(0, 0, -90));
-                    transform.position = new Vector3(6.33f, 3.23f, 0);
+                    transform.position = new Vector3(-5f, 4.68f, 0);
                     timer = 0;
                     canRotate = false;
                 }
                 else
                 {
                     transform.Rotate(new Vector3(0, 0, 90));
-                    transform.position = new Vector3(-4.91f, 4.7f, 0);
+                    transform.position = new Vector3(-6.25f, 4.7f, 0);
+                    timer = 0;
+                    canRotate = false;
+                }
+            }
+            else
+            {
+                if (rounded == 90)
+                {
+                    transform.Rotate(new Vector3(0, 0, 90));
+                    transform.position = new Vector3(4.79f, 4.7f, 0);
+                    timer = 0;
+                    canRotate = false;
+                }
+                else
+                {
+                    transform.Rotate(new Vector3(0, 0, -90));
+                    transform.position = new Vector3(6.23f, 3.12f, 0);
                     timer = 0;
                     canRotate = false;
                 }
