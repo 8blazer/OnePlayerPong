@@ -11,6 +11,7 @@ public class PlatformMovement : MonoBehaviour
     bool corner = false;
     bool canRotate = true;
     static public float rounded;
+    static public bool canMove = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,42 +22,49 @@ public class PlatformMovement : MonoBehaviour
     void Update()
     {
         rounded = Mathf.Round(transform.rotation.eulerAngles.z);
-        if (joystick.Horizontal > .2)
+        if (canMove)
         {
-            if (transform.rotation.eulerAngles.z == 0)
+            if (joystick.Horizontal > .2)
             {
-                GetComponent<Rigidbody2D>().velocity = new Vector2(speed, 0);
+                if (transform.rotation.eulerAngles.z == 0)
+                {
+                    GetComponent<Rigidbody2D>().velocity = new Vector2(speed, 0);
+                }
+                else if (transform.rotation.eulerAngles.z == 90)
+                {
+                    GetComponent<Rigidbody2D>().velocity = new Vector2(0, speed);
+                }
+                else if (transform.rotation.eulerAngles.z == 180 || transform.rotation.eulerAngles.z == -180)
+                {
+                    GetComponent<Rigidbody2D>().velocity = new Vector2(-speed, 0);
+                }
+                else
+                {
+                    GetComponent<Rigidbody2D>().velocity = new Vector2(0, -speed);
+                }
             }
-            else if (transform.rotation.eulerAngles.z == 90)
+            else if (joystick.Horizontal < -.2)
             {
-                GetComponent<Rigidbody2D>().velocity = new Vector2(0, speed);
-            }
-            else if (transform.rotation.eulerAngles.z == 180 || transform.rotation.eulerAngles.z == -180)
-            {
-                GetComponent<Rigidbody2D>().velocity = new Vector2(-speed, 0);
+                if (transform.rotation.eulerAngles.z == 0)
+                {
+                    GetComponent<Rigidbody2D>().velocity = new Vector2(-speed, 0);
+                }
+                else if (transform.rotation.eulerAngles.z == 90)
+                {
+                    GetComponent<Rigidbody2D>().velocity = new Vector2(0, -speed);
+                }
+                else if (transform.rotation.eulerAngles.z == 180 || transform.rotation.eulerAngles.z == -180)
+                {
+                    GetComponent<Rigidbody2D>().velocity = new Vector2(speed, 0);
+                }
+                else
+                {
+                    GetComponent<Rigidbody2D>().velocity = new Vector2(0, speed);
+                }
             }
             else
             {
-                GetComponent<Rigidbody2D>().velocity = new Vector2(0, -speed);
-            }
-        }
-        else if (joystick.Horizontal < -.2)
-        {
-            if (transform.rotation.eulerAngles.z == 0)
-            {
-                GetComponent<Rigidbody2D>().velocity = new Vector2(-speed, 0);
-            }
-            else if (transform.rotation.eulerAngles.z == 90)
-            {
-                GetComponent<Rigidbody2D>().velocity = new Vector2(0, -speed);
-            }
-            else if (transform.rotation.eulerAngles.z == 180 || transform.rotation.eulerAngles.z == -180)
-            {
-                GetComponent<Rigidbody2D>().velocity = new Vector2(speed, 0);
-            }
-            else
-            {
-                GetComponent<Rigidbody2D>().velocity = new Vector2(0, speed);
+                GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
             }
         }
         else

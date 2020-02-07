@@ -8,6 +8,7 @@ public class Ball : MonoBehaviour
     float xCompare = 0;
     float yCompare = 0;
     public GameObject platform;
+    public GameObject arrow;
     float timer = 0;
     System.Random rnd = new System.Random();
     // Start is called before the first frame update
@@ -46,14 +47,14 @@ public class Ball : MonoBehaviour
             if (PlatformMovement.rounded == 0)
             {
                 xCompare = transform.position.x - platform.transform.position.x;
-                if (xCompare < 0)
-                {
-                    transform.Rotate(new Vector3(0, 0, -90));
-                }
-                else
-                {
-                    transform.Rotate(new Vector3(0, 0, 180));
-                }
+                    if (xCompare < 0)
+                    {
+                        transform.Rotate(new Vector3(0, 0, -90));
+                    }
+                    else
+                    {
+                        transform.Rotate(new Vector3(0, 0, 180));
+                    }
                 speed = speed + .1f;
                 timer = 0;
             }
@@ -104,5 +105,12 @@ public class Ball : MonoBehaviour
         {
             SceneManager.LoadScene("Lose");
         }
+        /*
+        if (collision.gameObject.name == "Platform")
+        {
+            PlatformMovement.canMove = false;
+            arrow.GetComponent<SpriteRenderer>().enabled = true;
+        }
+        */
     }
 }
